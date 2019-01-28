@@ -1,0 +1,9 @@
+{
+  "name": "nodejs-express",
+  "version": "0.1.0",
+  "description": "Sample application using Node.js Express",
+  "main": "index.js",
+  "repository": "https://github.com/bashburn-signalfx/k8s-workshop-node-express",
+  "author": "Brian Ashburn <bashburn@signalfx.com>",
+  "license": "MIT"
+}

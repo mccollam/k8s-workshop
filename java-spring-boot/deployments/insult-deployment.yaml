@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: insult
+    app: insult
+  namespace: insult
+  name: insult
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: insult
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: insult
+        app: insult
+      annotations:
+        prometheus.io/scrape: "false"
+        prometheus.io/port: "8081"
+        prometheus.io/metric_path: "/actuator/prometheus"
+    spec:
+      containers:
+        - image: bashburn/insult-service:latest
+          imagePullPolicy: Never
+          name: insult
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SIGNALFX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: signalfx-token
+                  key: access-token
+            - name: ADJECTIVE_HOST
+              value: http://adjective.insult
+            - name: NOUN_HOST
+              value: http://noun.insult
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insult
+  namespace: insult
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    name: insult
+  type: NodePort

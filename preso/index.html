@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h1>Kubernetes Workshop</h1>
+        </section>
+				<section>
+          <h2>Agenda</h2>
+          <ul>
+            <li>Kubernetes Architecture and Component Overview</li>
+            <li>Kubernetes Installation</li>
+            <li>Application Deployment</li>
+            <li>SignalFx Kubernetes Agent</li>
+            <li>Prometheus Exporter</li>
+            <li>Metrics and APM with Istio</li>
+          </ul>
+        </section>
+        <section>
+          <section>
+            <h2>Kubernetes Architecture and Components</h2>
+            <div>Kubernetes is an orchestration platform for running containers.</div>
+          </section>
+          <section>
+            <h3>Terminology</h3>
+            <ul>
+              <li>Namespace</li>
+              <li>Container</li>
+              <li>Pod</li>
+              <li>Replication Controller</li>
+              <li>Service</li>
+              <li>ConfigMap</li>
+              <li>Secret</li>
+              <li>Volume</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Namespaces</h3>
+            <div>Namespaces are the highest level of organization in Kubernetes.</div>
+          </section>
+          <section>
+            <h3>Containers and Pods</h3>
+            <div>Containers are the running images.</div>
+            <div>Pods are the smallest unit of scalability within Kubernetes.</div>
+          </section>
+          <section>
+            <h3>Replication Controller</h3>
+            <div>The Replication Controller is in charge of managing the running of the pods.</div>
+          </section>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

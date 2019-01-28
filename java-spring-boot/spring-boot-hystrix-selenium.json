@@ -1,0 +1,61 @@
+{
+  "id": "2d8c701f-e68f-4b74-b8dd-f87ad8ea2ec0",
+  "version": "1.1",
+  "name": "Spring Boot Hystrix",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "06002eb8-f66c-4a49-94f7-43b6f3fd7c9a",
+    "name": "Insult Test",
+    "commands": [{
+      "id": "420c6781-4c93-4729-a987-44d04991d6c7",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5b1f96f8-d059-449d-bf52-5acdd8a15502",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x928",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf748a72-a504-49be-9022-b5f1ec5b9c57",
+      "comment": "",
+      "command": "click",
+      "target": "id=invoke",
+      "targets": [
+        ["id=invoke", "id"],
+        ["css=#invoke", "css"],
+        ["css=#invoke", "css:finder"],
+        ["xpath=//button[@id='invoke']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9abcc906-2a15-4a5e-9ab4-2f740b18307f",
+      "comment": "",
+      "command": "click",
+      "target": "id=invoke",
+      "targets": [
+        ["id=invoke", "id"],
+        ["css=#invoke", "css"],
+        ["css=#invoke", "css:finder"],
+        ["xpath=//button[@id='invoke']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "0dc0d4e6-b573-4773-87b3-7c710c2b4c81",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["06002eb8-f66c-4a49-94f7-43b6f3fd7c9a"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}

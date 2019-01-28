@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Elizabethan Insult Application</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+        integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <div>
+    <h1>RHOAR Shootout - Spring Boot</h1>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <h2 class="display-6">Spring Boot</h2>
+      <p class="lead">
+        This showcases an implementation of a silly but fun
+        application built using the microservices design pattern.
+        There are three services involved, in addition to the front
+        end which you are currently viewing.
+      </p>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Source Code</h2>
+          <a href="https://github.com/rhoar-shootout/rhoar-spring-boot">Source code</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row" style="margin-top:20px">
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Insult service</h2>
+          <p class="card-text">
+            Tap or click the button below to be insulted. Provide
+            your name to make it personal.
+          <form id="form-submit"><input type="text" id="name"/></form>
+          </p>
+          <button id="invoke" class="btn btn-outline-primary">Insult Me!</button>
+          <button id="clear" class="btn btn-outline-success">I Didn't Mean It</button>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Your Personal Insults</h2>
+          <ul id="insults"></ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+        integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+        crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function () {
+    function getOrPostInsult(e) {
+      const name = $('#name').val();
+      console.log(name);
+      if (name === '') getInsult();
+      e.preventDefault();
+    }
+
+    function getInsult() {
+      $.getJSON('/api/insult', updateInsultList)
+    }
+
+    function updateInsultList(insult) {
+      $('#insults').prepend($('<li>').text(`Thou ${insult.combined}!`));
+    }
+
+    $('#invoke').click(getOrPostInsult);
+  });
+</script>
+</body>
+</html>

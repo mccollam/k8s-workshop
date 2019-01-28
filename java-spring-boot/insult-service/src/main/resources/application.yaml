@@ -1,0 +1,10 @@
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 3
+      metrics:
+        healthSnapshot:
+          intervalInMilliseconds: 100
+adjective.host: http://localhost:8081
+noun.host: http://localhost:8082
