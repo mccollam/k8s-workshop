@@ -31,7 +31,6 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'javax.xml.bind:jaxb-api:2.3.0'
   compile project(':utilities')
-  compile('io.micrometer:micrometer-registry-signalfx:latest.release')
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'com.jayway.restassured:rest-assured:2.9.0'
 }

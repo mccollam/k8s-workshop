@@ -51,6 +51,8 @@
             <div>In the git repository there are directories for different langauges and frameworks. Each of these is
             set up to expose metrics and traces/spans. There are also Kubernetes deployment descriptors for each.</div>
           </section>
+
+          <!-- Java -->
           <section>
             <h3>Java/Spring Boot</h3>
             <div>For the Java and Spring Boot example, we are using the Spring Boot Actuator and Micrometer
@@ -95,6 +97,8 @@ public ResponseEntity&lt;String&gt; adjectiveOne() {
   return new ResponseEntity&lt;&gt;(firstSource.randomWord(), HttpStatus.OK);
 }</code></pre>
           </section>
+
+          <!-- Python -->
           <section>
             <h3>Python/Flask</h3>
             <div>In Python, we will be using the SignalFx API directly to send in metrics about our application</div>
@@ -120,14 +124,66 @@ with signalfx.SignalFx().ingest(token) as sfx:
                     },
                 ],)</code></pre>
           </section>
+
+          <!-- Go -->
           <section>
             <h3>Go/Negroni</h3>
             <div>In Go, we are using the SignalFx API directly to send metrics</div>
+            <pre>
+<code class="go">import (
+	"context"
+	"github.com/signalfx/golib/sfxclient"
+)
+
+// Create the client - this is the simplest
+sfx := sfxclient.NewHTTPDatapointSink()
+token := os.Getenv("SFX_TOKEN")
+ctx := context.Background()
+
+// Set up global dimensions
+dims := make(map[string]string)
+dims['app'] = 'k8ws-golang-negroni'
+
+// Send to SignalFx using the client
+client.AddDatapoints(ctx, []*datapoint.Datapoint{
+  Gauge("k8ws.negroni.path.healthz.calls", dims, 1),
+  Cumulative("k8sws.negroni.path.healthz.calls_cumulative", dims, 1),
+})</code></pre>
           </section>
+
+          <!-- NodeJS -->
           <section>
             <h3>NodeJS/Express</h3>
-            <div>For NodeJS and Express, we are using a custom middleware to pass a metrics reporting client to the
-              application</div>
+            <div>Install signalfx through NPM or Yarn</div>
+            <pre>
+<code class="sh">$ npm install --save signalfx
+$ yarn add signalfx</code></pre>
+            <div>Then we add the code for sending the metrics</div>
+            <pre>
+<code class="js">import signalfx from 'signalfx';
+const client = signalfx.Ingests(process.env.SFX_TOKEN);
+client.send({
+  counters : [
+    {
+      metric : 'k8ws.express.path.healthz.calls',
+      value : 1,
+      timestamp : Date.now(),
+      dimensions : {
+        'app' : 'k8ws-nodejs-express',
+      },
+    },
+  ],
+  cumulative_counters : [
+    {
+      metric : 'k8ws.express.path.healthz.calls_cumulative',
+      value : 1,
+      timestamp : Date.now(),
+      dimensions : {
+        'app' : 'k8ws-nodejs-express',
+      },
+    },
+  ],
+});</code></pre>
           </section>
         </section>
 			</div>
