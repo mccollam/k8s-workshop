@@ -11,6 +11,7 @@
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/personal.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -32,42 +33,101 @@
           <ul>
             <li>Kubernetes Architecture and Component Overview</li>
             <li>Kubernetes Installation</li>
-            <li>Application Deployment</li>
             <li>SignalFx Kubernetes Agent</li>
+            <li>Application Deployment</li>
             <li>Prometheus Exporter</li>
             <li>Metrics and APM with Istio</li>
           </ul>
         </section>
         <section>
+          <h2>Kubernetes Architecture and Components</h2>
+        </section>
+        <section>
           <section>
-            <h2>Kubernetes Architecture and Components</h2>
-            <div>Kubernetes is an orchestration platform for running containers.</div>
+            <h2>Application Deployment</h2>
           </section>
           <section>
-            <h3>Terminology</h3>
-            <ul>
-              <li>Namespace</li>
-              <li>Container</li>
-              <li>Pod</li>
-              <li>Replication Controller</li>
-              <li>Service</li>
-              <li>ConfigMap</li>
-              <li>Secret</li>
-              <li>Volume</li>
-            </ul>
+            <h3>Pick Your Language</h3>
+            <div>In the git repository there are directories for different langauges and frameworks. Each of these is
+            set up to expose metrics and traces/spans. There are also Kubernetes deployment descriptors for each.</div>
           </section>
           <section>
-            <h3>Namespaces</h3>
-            <div>Namespaces are the highest level of organization in Kubernetes.</div>
+            <h3>Java/Spring Boot</h3>
+            <div>For the Java and Spring Boot example, we are using the Spring Boot Actuator and Micrometer
+              plugin</div>
+            <!-- TODO: Add sample code for metrics annotations -->
+            <pre>
+<code class="gradle">dependencies {
+  compile 'org.springframework.boot:spring-boot-starter-actuator'
+  compile('io.micrometer:micrometer-registry-signalfx:latest.release')
+}</code></pre>
+            <div>Then we create the registry in the application</div>
+            <pre>
+<code class="java">import io.micrometer.core.instrument.MeterRegistry;
+@Bean
+MeterRegistryCustomizer&lt;MeterRegistry&gt; metricsCommonTags() {
+  return registry -&gt; registry.config().commonTags("application", "Elizabethan Insult");
+}</code></pre>
           </section>
           <section>
-            <h3>Containers and Pods</h3>
-            <div>Containers are the running images.</div>
-            <div>Pods are the smallest unit of scalability within Kubernetes.</div>
+            <h3>Java/Spring Boot</h3>
+            <div>Then we expose our metrics</div>
+            <pre>
+<code class="java">import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
+
+// Create the counters to use
+private final Counter firstCounter;
+private final Counter secondCounter;
+
+// Initialize in the constructor with the registry bean passed in
+public AdjectiveController(final MeterRegistry registry) {
+  firstCounter = registry.counter(API_CALL, Arrays.asList(SERVICE_TAG, Tag.of("context", "/api/adjective/one")));
+  secondCounter = registry.counter(API_CALL, Arrays.asList(SERVICE_TAG, Tag.of("context", "/api/adjective/two")));
+  firstTimer = registry.timer(API_LATENCY, Arrays.asList(SERVICE_TAG, Tag.of("context", "/api/adjective/one")));
+  secondTimer = registry.timer(API_LATENCY, Arrays.asList(SERVICE_TAG, Tag.of("context", "/api/adjective/two")));
+}
+
+@RequestMapping("/api/adjective/one")
+public ResponseEntity&lt;String&gt; adjectiveOne() {
+  firstCounter.increment();
+  return new ResponseEntity&lt;&gt;(firstSource.randomWord(), HttpStatus.OK);
+}</code></pre>
           </section>
           <section>
-            <h3>Replication Controller</h3>
-            <div>The Replication Controller is in charge of managing the running of the pods.</div>
+            <h3>Python/Flask</h3>
+            <div>In Python, we will be using the SignalFx API directly to send in metrics about our application</div>
+            <pre>
+<code class="python">import signalfx
+token = os.environ['SFX_TOKEN']
+with signalfx.SignalFx().ingest(token) as sfx:
+    sfx.send(
+            counters=[
+                {'metric': 'k8sws.flask.path.healthz.calls',
+                    'value': 1,
+                    'timestamp': int(time.now()),
+                    'dimensions': {
+                        'app': 'k8ws-python-flask'},
+                    },
+                ],
+            cumulative_counters=[
+                {'metric': 'k8sws.flask.path.heathz.calls_cumulative',
+                    'value': 1,
+                    'timestamp': int(time.now()),
+                    'dimensions': {
+                        'app': 'k8ws-python-flask'},
+                    },
+                ],)</code></pre>
+          </section>
+          <section>
+            <h3>Go/Negroni</h3>
+            <div>In Go, we are using the SignalFx API directly to send metrics</div>
+          </section>
+          <section>
+            <h3>NodeJS/Express</h3>
+            <div>For NodeJS and Express, we are using a custom middleware to pass a metrics reporting client to the
+              application</div>
           </section>
         </section>
 			</div>

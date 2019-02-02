@@ -16,6 +16,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
+        'signalfx',
     ],
     extra_requires={
         'test': [
