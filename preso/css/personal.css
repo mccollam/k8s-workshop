@@ -5,3 +5,7 @@
 .reveal pre code {
   max-height: 475px;
 }
+.reveal .slide2 {
+  color: black;
+}
+
