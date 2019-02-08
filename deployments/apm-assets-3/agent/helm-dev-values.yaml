@@ -1,0 +1,12 @@
+# A Kubernetes Helm values file that you can use when deploying the agent in a
+# development K8s cluster.  You should change the imageTag to whatever tag you
+# are using for development.
+signalFxAccessToken: MYACCESSTOKEN
+clusterName: dev-cluster
+imageRepository: quay.io/signalfx/signalfx-agent-dev
+fullnameOverride: agent
+imageTag: 3.4.2
+logLevel: debug
+pullPolicy: Always
+kubeletAPI:
+  skipVerify: true

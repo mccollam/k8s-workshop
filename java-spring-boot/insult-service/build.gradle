@@ -33,6 +33,7 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-web')
   compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
   compile('io.micrometer:micrometer-registry-signalfx:latest.release')
+  compile('io.micrometer:micrometer-core:latest.release')
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

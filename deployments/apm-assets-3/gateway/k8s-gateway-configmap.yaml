@@ -1,0 +1,48 @@
+# Contact: dave@signalfx.com
+#
+# 2 locations to update:
+# - DefaultAuthToken
+# - DefaultAuthToken
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smart-gateway-config
+  labels:
+    service: smart-gateway 
+data:
+  sfdbconfig.conf: |
+    {
+      "StatsDelay": "10s",
+      "LocalDebugServer": "0.0.0.0:6060",
+      "LogDir": "/var/log/sfproxy",
+      "DebugFlag": "uN1c()rnz",
+      "LogFormat": "json",
+      "MaxGracefulWaitTime": "30s",
+      "ListenFrom": [
+        {
+          "Type": "carbon",
+          "ListenAddr" : "0.0.0.0:2003",
+                "MetricDeconstructor": "commakeys"
+        },
+        {
+          "Type": "signalfx",
+          "ListenAddr" : "0.0.0.0:8080"
+        }
+      ],
+      "ForwardTo": [
+        {
+        "type": "signalfx",
+        "DefaultAuthToken": "YOUR_SFX_TOKEN",
+        "Name": "trace-smart-gateway",
+        "TraceSample":{
+            "BackupLocation":"/var/config/sfproxy/data"
+          }
+        },
+        {
+        "type": "signalfx-json",
+        "DefaultAuthToken": "YOUR_SFX_TOKEN",
+        "Name": "metric-gateway"
+        }
+      ]
+    }
