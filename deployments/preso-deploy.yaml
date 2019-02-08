@@ -16,7 +16,6 @@ spec:
       containers:
         - name: k8sws-preso
           image: bashburn/k8sws-preso:latest
-          imagePullPolicy: Never
           ports:
             - name: http-port
               containerPort: 80
